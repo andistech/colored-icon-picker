@@ -12,12 +12,21 @@ export default function App() {
   return (
     <main className="app-shell" data-theme={themeMode}>
       <header className="app-header">
-        <div>
-          <p className="app-header__badge">React demo</p>
-          <h1>Icon and Color Picker</h1>
-          <p className="app-header__copy">
-            One trigger opens a combined icon and color picker. The color mode is controlled on the main page.
-          </p>
+        <nav className="app-header__breadcrumb" aria-label="Breadcrumb">
+          <span>Components</span>
+          <span className="app-header__breadcrumb-sep" aria-hidden="true">/</span>
+          <span>colored-icon-picker</span>
+        </nav>
+        <h1 className="app-header__title">Colored Icon Picker</h1>
+        <p className="app-header__description">
+          A combined icon and color picker in a single popover. Ships 1,600+ categorized Lucide icons
+          with category browsing, search, hex color input, and dark mode.
+        </p>
+        <div className="app-header__tags">
+          <span className="app-tag">Component</span>
+          <span className="app-tag">lucide-react</span>
+          <span className="app-tag">React 19</span>
+          <span className="app-tag">shadcn</span>
         </div>
       </header>
 

@@ -80,44 +80,49 @@ export function ColoredIconPickerDemo({
       </div>
 
       <aside className="settings-panel">
-        <div>
-          <p className="toolbar__kicker">Global mode</p>
-          <h2>Color application</h2>
+        <div className="settings-panel__group">
+          <p className="settings-panel__label">Color applied to</p>
+          <ColorTargetControl value={colorTarget} onChange={onColorTargetChange} />
         </div>
-        <ColorTargetControl value={colorTarget} onChange={onColorTargetChange} />
-        <button
-          type="button"
-          className="theme-toggle"
-          aria-label={`Switch to ${nextThemeMode} mode`}
-          onClick={() => onThemeModeChange(nextThemeMode)}
-        >
-          {themeMode === 'day' ? <Moon aria-hidden="true" size={18} /> : <Sun aria-hidden="true" size={18} />}
-          <span>{themeMode === 'day' ? 'Night' : 'Day'} mode</span>
-        </button>
-        <dl className="state-list">
-          <div>
-            <dt>Icon</dt>
-            <dd>{icon.label}</dd>
-          </div>
-          <div>
-            <dt>Color</dt>
-            <dd>{color.toUpperCase()}</dd>
-          </div>
-          <div>
-            <dt>Applied to</dt>
-            <dd>{colorTarget}</dd>
-          </div>
-          <div>
-            <dt>Display mode</dt>
-            <dd>{themeMode}</dd>
-          </div>
-          {colorTarget === 'background' ? (
+        <div className="settings-panel__group">
+          <p className="settings-panel__label">Appearance</p>
+          <button
+            type="button"
+            className="theme-toggle"
+            aria-label={`Switch to ${nextThemeMode} mode`}
+            onClick={() => onThemeModeChange(nextThemeMode)}
+          >
+            {themeMode === 'day' ? <Moon aria-hidden="true" size={16} /> : <Sun aria-hidden="true" size={16} />}
+            <span>Switch to {nextThemeMode} mode</span>
+          </button>
+        </div>
+        <div className="settings-panel__group">
+          <p className="settings-panel__label">State</p>
+          <dl className="state-list">
             <div>
-              <dt>Icon contrast</dt>
-              <dd>{foregroundColor}</dd>
+              <dt>Icon</dt>
+              <dd>{icon.label}</dd>
             </div>
-          ) : null}
-        </dl>
+            <div>
+              <dt>Color</dt>
+              <dd>{color.toUpperCase()}</dd>
+            </div>
+            <div>
+              <dt>Applied to</dt>
+              <dd>{colorTarget}</dd>
+            </div>
+            <div>
+              <dt>Theme</dt>
+              <dd>{themeMode}</dd>
+            </div>
+            {colorTarget === 'background' ? (
+              <div>
+                <dt>Icon contrast</dt>
+                <dd>{foregroundColor}</dd>
+              </div>
+            ) : null}
+          </dl>
+        </div>
       </aside>
     </section>
   );
