@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="512" height="512">
+    <div xmlns="http://www.w3.org/1999/xhtml"
+      style="
+        width:512px;
+        height:512px;
+        border-radius:50%;
+        background:
+          radial-gradient(circle at center,
+            rgba(255,255,255,0.95) 0%,
+            rgba(255,255,255,0.45) 18%,
+            rgba(255,255,255,0) 44%),
+          conic-gradient(
+            #ff2a2a,
+            #ff8a00,
+            #ffe600,
+            #00f04c,
+            #00eaff,
+            #2458ff,
+            #7a1cff,
+            #ff00d4,
+            #ff2a2a
+          );
+      ">
+    </div>
+  </foreignObject>
+</svg>
