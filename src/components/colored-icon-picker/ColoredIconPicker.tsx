@@ -44,8 +44,12 @@ export function ColoredIconPicker({
   const [copiedHex, setCopiedHex] = useState(false);
   const [query, setQuery] = useState('');
   const [hexDraftState, setHexDraftState] = useState({ color, draft: color });
+  const [activeCategory, setActiveCategory] = useState(iconCategories[0]?.key ?? '');
   const wrapperRef = useRef<HTMLDivElement>(null);
   const systemColorInputRef = useRef<HTMLInputElement>(null);
+  const scrollPaneRef = useRef<HTMLDivElement>(null);
+  const categoryNavRef = useRef<HTMLDivElement>(null);
+  const categoryRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const popoverId = useId();
   const selectedIcon = getIconOption(iconKey);
   const triggerIconColor = colorTarget === 'background' ? getReadableIconColor(color) : color;
@@ -92,6 +96,56 @@ export function ColoredIconPicker({
       document.removeEventListener('keydown', onKeyDown);
     };
   }, [isOpen]);
+
+  // Reset scroll pane and active category when popover opens or query changes.
+  useEffect(() => {
+    if (!isOpen) return;
+    setActiveCategory(filteredCategories[0]?.key ?? '');
+    if (scrollPaneRef.current) scrollPaneRef.current.scrollTop = 0;
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setActiveCategory(filteredCategories[0]?.key ?? '');
+    if (scrollPaneRef.current) scrollPaneRef.current.scrollTop = 0;
+  }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Auto-center the active category button in the nav bar.
+  useEffect(() => {
+    const nav = categoryNavRef.current;
+    if (!nav || !activeCategory) return;
+    const btn = nav.querySelector<HTMLElement>(`[data-cat="${activeCategory}"]`);
+    if (!btn) return;
+    const targetScroll = btn.offsetLeft - nav.clientWidth / 2 + btn.offsetWidth / 2;
+    nav.scrollTo({ left: Math.max(0, Math.min(targetScroll, nav.scrollWidth - nav.clientWidth)), behavior: 'smooth' });
+  }, [activeCategory]);
+
+  function onIconPaneScroll(): void {
+    const pane = scrollPaneRef.current;
+    if (!pane) return;
+    const paneTop = pane.getBoundingClientRect().top;
+    let active = filteredCategories[0]?.key ?? '';
+    for (const cat of filteredCategories) {
+      const el = categoryRefs.current.get(cat.key);
+      if (!el) continue;
+      if (el.getBoundingClientRect().top - paneTop <= 1) active = cat.key;
+    }
+    setActiveCategory(active);
+  }
+
+  function scrollToCategory(key: string): void {
+    const pane = scrollPaneRef.current;
+    const el = categoryRefs.current.get(key);
+    if (!pane || !el) return;
+    pane.scrollTop += el.getBoundingClientRect().top - pane.getBoundingClientRect().top;
+    setActiveCategory(key);
+  }
+
+  function setCatRef(key: string) {
+    return (el: HTMLDivElement | null) => {
+      if (el) categoryRefs.current.set(key, el);
+      else categoryRefs.current.delete(key);
+    };
+  }
 
   function onHexInputChange(value: string): void {
     const normalizedColor = normalizeHexColor(value);
@@ -236,9 +290,24 @@ export function ColoredIconPicker({
               <span className="sr-only">Search icons</span>
               <input value={query} placeholder="Search" onChange={(event) => setQuery(event.target.value)} />
             </label>
-            <div className="icon-scroll-pane">
+            <div className="icon-category-nav" ref={categoryNavRef} role="tablist" aria-label="Icon categories">
               {filteredCategories.map((cat) => (
-                <div key={cat.key} className="icon-category">
+                <button
+                  type="button"
+                  key={cat.key}
+                  role="tab"
+                  data-cat={cat.key}
+                  className="icon-category-nav__btn"
+                  aria-selected={cat.key === activeCategory}
+                  onClick={() => scrollToCategory(cat.key)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+            <div className="icon-scroll-pane" ref={scrollPaneRef} onScroll={onIconPaneScroll}>
+              {filteredCategories.map((cat) => (
+                <div key={cat.key} className="icon-category" ref={setCatRef(cat.key)}>
                   <p className="icon-category__label">{cat.label}</p>
                   <div className="icon-grid">
                     {cat.icons.map((option) => {

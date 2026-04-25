@@ -544,7 +544,45 @@ button {
   padding: 0 12px 0 38px;
 }
 
+.icon-category-nav {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.icon-category-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.icon-category-nav__btn {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--muted-bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+.icon-category-nav__btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.icon-category-nav__btn[aria-selected="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+
 .icon-scroll-pane {
+  position: relative;
   max-height: 240px;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -561,12 +599,17 @@ button {
 }
 
 .icon-category__label {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   margin: 0 0 6px;
+  padding: 2px 0 4px;
   color: var(--text-muted);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  background: var(--raised-bg);
 }
 
 .icon-no-results {
