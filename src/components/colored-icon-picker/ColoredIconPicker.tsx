@@ -10,11 +10,66 @@ import {
 } from './color';
 import { getIconOption, iconCategories } from './icons';
 
+export type PopoverPlacement =
+  | 'auto'
+  | 'top-start'    | 'top-center'    | 'top-end'
+  | 'bottom-start' | 'bottom-center' | 'bottom-end'
+  | 'left-start'   | 'left-center'   | 'left-end'
+  | 'right-start'  | 'right-center'  | 'right-end';
+
+function resolveAutoPlacement(el: HTMLElement): Exclude<PopoverPlacement, 'auto'> {
+  const rect = el.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const PW = Math.min(380, vw - 32);
+  const PH = 520;
+
+  // Prefer bottom; fall back to top if more space there
+  const side = (vh - rect.bottom >= PH || vh - rect.bottom >= rect.top) ? 'bottom' : 'top';
+
+  // Prefer center, fall back to end (right-align / extends left), then start
+  const triggerCx = (rect.left + rect.right) / 2;
+  let align: 'start' | 'center' | 'end';
+  if (triggerCx - PW / 2 >= 0 && triggerCx + PW / 2 <= vw) {
+    align = 'center';
+  } else if (rect.right - PW >= 0) {
+    align = 'end';
+  } else {
+    align = 'start';
+  }
+  return `${side}-${align}` as Exclude<PopoverPlacement, 'auto'>;
+}
+
+function getPopoverStyle(placement: PopoverPlacement, wrapperEl: HTMLElement | null): CSSProperties {
+  const resolved =
+    placement === 'auto'
+      ? (wrapperEl ? resolveAutoPlacement(wrapperEl) : 'bottom-end')
+      : placement;
+  const [side, align] = resolved.split('-') as [string, string];
+  const style: CSSProperties = {};
+  const gap = 'calc(100% + 8px)';
+  if (side === 'bottom') style.top = gap;
+  else if (side === 'top') style.bottom = gap;
+  else if (side === 'left') style.right = gap;
+  else style.left = gap;
+  if (side === 'top' || side === 'bottom') {
+    if (align === 'start') style.left = 0;
+    else if (align === 'center') { style.left = '50%'; style.transform = 'translateX(-50%)'; }
+    else style.right = 0;
+  } else {
+    if (align === 'start') style.top = 0;
+    else if (align === 'center') { style.top = '50%'; style.transform = 'translateY(-50%)'; }
+    else style.bottom = 0;
+  }
+  return style;
+}
+
 type ColoredIconPickerProps = {
   iconKey: string;
   color: string;
   colorTarget: ColorTarget;
   iconModeBackgroundColor: string;
+  placement?: PopoverPlacement;
   onIconChange: (iconKey: string) => void;
   onColorChange: (color: string) => void;
 };
@@ -37,6 +92,7 @@ export function ColoredIconPicker({
   color,
   colorTarget,
   iconModeBackgroundColor,
+  placement = 'auto' as PopoverPlacement,
   onIconChange,
   onColorChange,
 }: ColoredIconPickerProps) {
@@ -202,7 +258,13 @@ export function ColoredIconPicker({
       </button>
 
       {isOpen ? (
-        <div className="icon-picker__popover" id={popoverId} role="dialog" aria-label="Icon and color picker">
+        <div
+          className="icon-picker__popover"
+          id={popoverId}
+          role="dialog"
+          aria-label="Icon and color picker"
+          style={getPopoverStyle(placement, wrapperRef.current)}
+        >
           <div className="icon-picker__popover-header">
             <div className="icon-picker__preview" style={triggerStyle}>
               <SelectedIcon aria-hidden="true" size={24} strokeWidth={2.25} />
@@ -338,6 +400,66 @@ export function ColoredIconPicker({
           </section>
         </div>
       ) : null}
+    </div>
+  );
+}
+
+const PLACEMENT_CELLS: {
+  placement: Exclude<PopoverPlacement, 'auto'>;
+  col: number;
+  row: number;
+  label: string;
+}[] = [
+  { placement: 'top-start',     col: 2, row: 1, label: 'Top, left-aligned' },
+  { placement: 'top-center',    col: 3, row: 1, label: 'Top, centered' },
+  { placement: 'top-end',       col: 4, row: 1, label: 'Top, right-aligned' },
+  { placement: 'left-start',    col: 1, row: 2, label: 'Left, top-aligned' },
+  { placement: 'left-center',   col: 1, row: 3, label: 'Left, centered' },
+  { placement: 'left-end',      col: 1, row: 4, label: 'Left, bottom-aligned' },
+  { placement: 'right-start',   col: 5, row: 2, label: 'Right, top-aligned' },
+  { placement: 'right-center',  col: 5, row: 3, label: 'Right, centered' },
+  { placement: 'right-end',     col: 5, row: 4, label: 'Right, bottom-aligned' },
+  { placement: 'bottom-start',  col: 2, row: 5, label: 'Bottom, left-aligned' },
+  { placement: 'bottom-center', col: 3, row: 5, label: 'Bottom, centered' },
+  { placement: 'bottom-end',    col: 4, row: 5, label: 'Bottom, right-aligned' },
+];
+
+type PlacementControlProps = {
+  value: PopoverPlacement;
+  onChange: (p: PopoverPlacement) => void;
+};
+
+export function PlacementControl({ value, onChange }: PlacementControlProps) {
+  return (
+    <div className="placement-control">
+      <div className="placement-grid" role="radiogroup" aria-label="Popover placement">
+        {PLACEMENT_CELLS.map(({ placement, col, row, label }) => (
+          <button
+            key={placement}
+            type="button"
+            role="radio"
+            className="placement-dot"
+            style={{ gridColumn: col, gridRow: row }}
+            aria-label={label}
+            aria-checked={value === placement}
+            title={label}
+            onClick={() => onChange(placement)}
+          />
+        ))}
+        <div
+          className="placement-grid__center"
+          style={{ gridColumn: '2 / 5', gridRow: '2 / 5' }}
+          aria-hidden="true"
+        />
+      </div>
+      <button
+        type="button"
+        className="placement-auto-btn"
+        aria-pressed={value === 'auto'}
+        onClick={() => onChange('auto')}
+      >
+        Auto
+      </button>
     </div>
   );
 }

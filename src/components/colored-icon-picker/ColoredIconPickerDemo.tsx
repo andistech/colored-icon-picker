@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
-import { Moon, Sun } from 'lucide-react';
 
-import { ColorTargetControl, ColoredIconPicker } from './ColoredIconPicker';
+import { ColorTargetControl, ColoredIconPicker, PlacementControl, type PopoverPlacement } from './ColoredIconPicker';
 import { getReadableIconColor, type ColorTarget, type ThemeMode } from './color';
 import { getIconOption } from './icons';
 
@@ -10,10 +9,11 @@ type ColoredIconPickerDemoProps = {
   color: string;
   colorTarget: ColorTarget;
   themeMode: ThemeMode;
+  placement: PopoverPlacement;
   onIconChange: (iconKey: string) => void;
   onColorChange: (color: string) => void;
   onColorTargetChange: (target: ColorTarget) => void;
-  onThemeModeChange: (mode: ThemeMode) => void;
+  onPlacementChange: (p: PopoverPlacement) => void;
 };
 
 export function ColoredIconPickerDemo({
@@ -21,14 +21,14 @@ export function ColoredIconPickerDemo({
   color,
   colorTarget,
   themeMode,
+  placement,
   onIconChange,
   onColorChange,
   onColorTargetChange,
-  onThemeModeChange,
+  onPlacementChange,
 }: ColoredIconPickerDemoProps) {
   const icon = useMemo(() => getIconOption(iconKey), [iconKey]);
   const Icon = icon.Icon;
-  const nextThemeMode = themeMode === 'day' ? 'night' : 'day';
   const iconModeBackgroundColor = themeMode === 'day' ? '#ffffff' : '#1f2937';
   const foregroundColor = colorTarget === 'background' ? getReadableIconColor(color) : color;
   const visibleBackgroundColor = colorTarget === 'background' ? color : iconModeBackgroundColor;
@@ -46,6 +46,7 @@ export function ColoredIconPickerDemo({
             color={color}
             colorTarget={colorTarget}
             iconModeBackgroundColor={iconModeBackgroundColor}
+            placement={placement}
             onIconChange={onIconChange}
             onColorChange={onColorChange}
           />
@@ -85,16 +86,8 @@ export function ColoredIconPickerDemo({
           <ColorTargetControl value={colorTarget} onChange={onColorTargetChange} />
         </div>
         <div className="settings-panel__group">
-          <p className="settings-panel__label">Appearance</p>
-          <button
-            type="button"
-            className="theme-toggle"
-            aria-label={`Switch to ${nextThemeMode} mode`}
-            onClick={() => onThemeModeChange(nextThemeMode)}
-          >
-            {themeMode === 'day' ? <Moon aria-hidden="true" size={16} /> : <Sun aria-hidden="true" size={16} />}
-            <span>Switch to {nextThemeMode} mode</span>
-          </button>
+          <p className="settings-panel__label">Popover placement</p>
+          <PlacementControl value={placement} onChange={onPlacementChange} />
         </div>
         <div className="settings-panel__group">
           <p className="settings-panel__label">State</p>
@@ -110,6 +103,10 @@ export function ColoredIconPickerDemo({
             <div>
               <dt>Applied to</dt>
               <dd>{colorTarget}</dd>
+            </div>
+            <div>
+              <dt>Placement</dt>
+              <dd>{placement}</dd>
             </div>
             <div>
               <dt>Theme</dt>
