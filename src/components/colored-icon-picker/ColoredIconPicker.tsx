@@ -10,7 +10,7 @@ import {
 } from './color';
 import { getIconOption, iconOptions } from './icons';
 
-type IconColorPickerProps = {
+type ColoredIconPickerProps = {
   iconKey: string;
   color: string;
   colorTarget: ColorTarget;
@@ -32,14 +32,14 @@ const colorSwatches = [
   '#64748b',
 ];
 
-export function IconColorPicker({
+export function ColoredIconPicker({
   iconKey,
   color,
   colorTarget,
   iconModeBackgroundColor,
   onIconChange,
   onColorChange,
-}: IconColorPickerProps) {
+}: ColoredIconPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [copiedHex, setCopiedHex] = useState(false);
   const [query, setQuery] = useState('');

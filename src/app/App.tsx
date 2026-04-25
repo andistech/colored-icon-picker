@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { IconColorPickerDemo } from '../components/icon-color-picker/IconColorPickerDemo';
-import type { ColorTarget, ThemeMode } from '../components/icon-color-picker/color';
+import { ColoredIconPickerDemo } from '../components/colored-icon-picker/ColoredIconPickerDemo';
+import type { ColorTarget, ThemeMode } from '../components/colored-icon-picker/color';
 
 export default function App() {
   const [iconKey, setIconKey] = useState('sparkles');
@@ -21,7 +21,7 @@ export default function App() {
         </div>
       </header>
 
-      <IconColorPickerDemo
+      <ColoredIconPickerDemo
         iconKey={iconKey}
         color={color}
         colorTarget={colorTarget}

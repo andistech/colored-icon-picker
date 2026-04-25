@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
-import { ColorTargetControl, IconColorPicker } from './IconColorPicker';
+import { ColorTargetControl, ColoredIconPicker } from './ColoredIconPicker';
 import { getReadableIconColor, type ColorTarget, type ThemeMode } from './color';
 import { getIconOption } from './icons';
 
-type IconColorPickerDemoProps = {
+type ColoredIconPickerDemoProps = {
   iconKey: string;
   color: string;
   colorTarget: ColorTarget;
@@ -16,7 +16,7 @@ type IconColorPickerDemoProps = {
   onThemeModeChange: (mode: ThemeMode) => void;
 };
 
-export function IconColorPickerDemo({
+export function ColoredIconPickerDemo({
   iconKey,
   color,
   colorTarget,
@@ -25,7 +25,7 @@ export function IconColorPickerDemo({
   onColorChange,
   onColorTargetChange,
   onThemeModeChange,
-}: IconColorPickerDemoProps) {
+}: ColoredIconPickerDemoProps) {
   const icon = useMemo(() => getIconOption(iconKey), [iconKey]);
   const Icon = icon.Icon;
   const nextThemeMode = themeMode === 'day' ? 'night' : 'day';
@@ -39,9 +39,9 @@ export function IconColorPickerDemo({
         <div className="toolbar">
           <div>
             <p className="toolbar__kicker">Component</p>
-            <h2>Icon color picker</h2>
+            <h2>Colored icon picker</h2>
           </div>
-          <IconColorPicker
+          <ColoredIconPicker
             iconKey={iconKey}
             color={color}
             colorTarget={colorTarget}

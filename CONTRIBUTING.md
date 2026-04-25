@@ -32,15 +32,15 @@ bun run build
 ## Architecture
 
 State is owned entirely by `App.tsx` and flows down as props.
-`IconColorPicker` and `ColorTargetControl` are fully controlled components.
+`ColoredIconPicker` and `ColorTargetControl` are fully controlled components.
 
 ### Source files
 
 - Entry: `src/app/App.tsx`
-- Component: `src/components/icon-color-picker/IconColorPicker.tsx`
-- Demo wrapper: `src/components/icon-color-picker/IconColorPickerDemo.tsx`
-- Color utilities: `src/components/icon-color-picker/color.ts`
-- Icon registry: `src/components/icon-color-picker/icons.ts`
+- Component: `src/components/colored-icon-picker/ColoredIconPicker.tsx`
+- Demo wrapper: `src/components/colored-icon-picker/ColoredIconPickerDemo.tsx`
+- Color utilities: `src/components/colored-icon-picker/color.ts`
+- Icon registry: `src/components/colored-icon-picker/icons.ts`
 - Styles: `src/index.css`
 
 ### Color modes

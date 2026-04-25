@@ -1,4 +1,4 @@
-# Icon Color Picker
+# Colored Icon Picker
 
 A combined icon and color picker React component.
 One trigger button opens a popover for selecting both an icon and a color.
@@ -39,13 +39,13 @@ bun run build
 
 ```
 src/
-  app/App.tsx                          # Root state and layout
-  components/icon-color-picker/
-    IconColorPicker.tsx                # Picker component + ColorTargetControl
-    IconColorPickerDemo.tsx            # Demo wrapper with preview and settings
-    color.ts                           # Hex validation and WCAG luminance
-    icons.ts                           # Icon registry (20 Lucide icons)
-  index.css                            # All styles and CSS custom properties
+  app/App.tsx                            # Root state and layout
+  components/colored-icon-picker/
+    ColoredIconPicker.tsx                # Picker component + ColorTargetControl
+    ColoredIconPickerDemo.tsx            # Demo wrapper with preview and settings
+    color.ts                             # Hex validation and WCAG luminance
+    icons.ts                             # Icon registry (20 Lucide icons)
+  index.css                              # All styles and CSS custom properties
 ```
 
 ## Contributing
