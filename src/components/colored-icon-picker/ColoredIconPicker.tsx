@@ -8,7 +8,7 @@ import {
   normalizeHexColor,
   type ColorTarget,
 } from './color';
-import { getIconOption, iconOptions } from './icons';
+import { getIconOption, iconCategories } from './icons';
 
 type ColoredIconPickerProps = {
   iconKey: string;
@@ -52,14 +52,19 @@ export function ColoredIconPicker({
   const triggerBackground = colorTarget === 'background' ? color : iconModeBackgroundColor;
   const triggerBorder = colorTarget === 'background' ? color : color;
 
-  const filteredIcons = useMemo(() => {
+  const filteredCategories = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
     if (!normalizedQuery) {
-      return iconOptions;
+      return iconCategories;
     }
 
-    return iconOptions.filter((option) => option.label.toLowerCase().includes(normalizedQuery));
+    return iconCategories
+      .map((cat) => ({
+        ...cat,
+        icons: cat.icons.filter((option) => option.label.toLowerCase().includes(normalizedQuery)),
+      }))
+      .filter((cat) => cat.icons.length > 0);
   }, [query]);
 
   useEffect(() => {
@@ -231,25 +236,35 @@ export function ColoredIconPicker({
               <span className="sr-only">Search icons</span>
               <input value={query} placeholder="Search" onChange={(event) => setQuery(event.target.value)} />
             </label>
-            <div className="icon-grid">
-              {filteredIcons.map((option) => {
-                const OptionIcon = option.Icon;
-                const isSelected = option.key === iconKey;
+            <div className="icon-scroll-pane">
+              {filteredCategories.map((cat) => (
+                <div key={cat.key} className="icon-category">
+                  <p className="icon-category__label">{cat.label}</p>
+                  <div className="icon-grid">
+                    {cat.icons.map((option) => {
+                      const OptionIcon = option.Icon;
+                      const isSelected = option.key === iconKey;
 
-                return (
-                  <button
-                    type="button"
-                    key={option.key}
-                    className="icon-option"
-                    aria-label={option.label}
-                    aria-pressed={isSelected}
-                    title={option.label}
-                    onClick={() => onIconChange(option.key)}
-                  >
-                    <OptionIcon aria-hidden="true" size={21} />
-                  </button>
-                );
-              })}
+                      return (
+                        <button
+                          type="button"
+                          key={option.key}
+                          className="icon-option"
+                          aria-label={option.label}
+                          aria-pressed={isSelected}
+                          title={option.label}
+                          onClick={() => onIconChange(option.key)}
+                        >
+                          <OptionIcon aria-hidden="true" size={21} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+              {filteredCategories.length === 0 && (
+                <p className="icon-no-results">No icons found</p>
+              )}
             </div>
           </section>
         </div>

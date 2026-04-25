@@ -544,10 +544,43 @@ button {
   padding: 0 12px 0 38px;
 }
 
+.icon-scroll-pane {
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.icon-category {
+  margin-bottom: 12px;
+}
+
+.icon-category:last-child {
+  margin-bottom: 0;
+}
+
+.icon-category__label {
+  margin: 0 0 6px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.icon-no-results {
+  margin: 0;
+  padding: 16px 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
 .icon-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 5px;
 }
 
 .icon-option {
