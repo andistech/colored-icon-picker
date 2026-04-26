@@ -6,7 +6,7 @@ One trigger button opens a popover for selecting both an icon and a color.
 ## Install
 
 ```bash
-npx shadcn@latest add https://andistech.github.io/colored-icon-picker/r/colored-icon-picker.json
+bunx shadcn@latest add https://andistech.github.io/colored-icon-picker/r/colored-icon-picker.json
 ```
 
 ## Features
