@@ -96,7 +96,7 @@ export default function App() {
         <h2 className="m-0 mb-5 text-[1.375rem] font-semibold tracking-[-0.02em] text-foreground">Installation</h2>
         <div className="px-6 py-5 bg-[#09090b] text-[#e4e4e7] rounded-lg font-mono text-[0.8125rem] leading-[1.7] overflow-x-auto flex items-center gap-[10px] py-[14px]">
           <span className="text-[#52525b] select-none">$</span>
-          <span>npx shadcn@latest add colored-icon-picker</span>
+          <span>npx shadcn@latest add https://andistech.github.io/colored-icon-picker/r/colored-icon-picker.json</span>
         </div>
       </section>
 

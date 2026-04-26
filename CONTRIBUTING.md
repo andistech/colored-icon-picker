@@ -27,6 +27,7 @@ bun run build
 - Vite 8
 - TypeScript 6
 - React 19
+- Tailwind CSS 4
 - Lucide React
 
 ## Architecture
@@ -41,7 +42,16 @@ State is owned entirely by `App.tsx` and flows down as props.
 - Demo wrapper: `src/components/colored-icon-picker/ColoredIconPickerDemo.tsx`
 - Color utilities: `src/components/colored-icon-picker/color.ts`
 - Icon registry: `src/components/colored-icon-picker/icons.ts`
-- Styles: `src/index.css`
+- Class helper: `src/lib/cn.ts`
+- Tokens + resets: `src/index.css`
+
+### Styling
+
+The component uses Tailwind CSS 4 utility classes throughout.
+Shadcn design tokens (`--background`, `--foreground`, `--border`, etc.) are defined as CSS
+custom properties in `src/index.css` and mapped to Tailwind color utilities via `@theme inline`.
+Day/night theme is toggled by `data-theme="night"` on the `.app-shell` element, which overrides
+the token values---no Tailwind `dark:` variants are needed.
 
 ### Color modes
 
@@ -62,7 +72,7 @@ click).
 
 Conventional Commits are enforced by hook:
 
-- `type(scope): Subject line`
+- `type: Subject line`
 - Subject in imperative mood, capitalized, no period, max 50 chars
 - Body line length max 72 chars
 - Blank line between subject and body

@@ -1,17 +1,24 @@
 # Colored Icon Picker
 
-A combined icon and color picker React component.
+A combined icon and color picker React component distributed as a shadcn registry component.
 One trigger button opens a popover for selecting both an icon and a color.
+
+## Install
+
+```bash
+npx shadcn@latest add https://andistech.github.io/colored-icon-picker/r/colored-icon-picker.json
+```
 
 ## Features
 
 - Single trigger opens a combined icon + color picker popover
+- 1,600+ Lucide icons across 30+ categories with search and category nav
 - Color selection via system color wheel, hex input, and preset swatches
 - Hex input with clipboard copy and invalid-state feedback
-- Searchable icon grid (20 Lucide icons)
 - Two color application modes: icon foreground or background
 - WCAG-based automatic black/white contrast when coloring a background
-- Day/night theme support
+- Auto-positioning popover with 12 explicit placement options
+- Day/night theme support via shadcn CSS custom properties
 
 ## Local development
 
@@ -33,6 +40,7 @@ bun run build
 - Vite 8
 - TypeScript 6
 - React 19
+- Tailwind CSS 4
 - Lucide React
 
 ## Project structure
@@ -44,8 +52,9 @@ src/
     ColoredIconPicker.tsx                # Picker component + ColorTargetControl
     ColoredIconPickerDemo.tsx            # Demo wrapper with preview and settings
     color.ts                             # Hex validation and WCAG luminance
-    icons.ts                             # Icon registry (20 Lucide icons)
-  index.css                              # All styles and CSS custom properties
+    icons.ts                             # Icon registry (1,600+ Lucide icons)
+  lib/cn.ts                             # clsx + tailwind-merge helper
+  index.css                              # shadcn tokens and global resets
 ```
 
 ## Contributing
