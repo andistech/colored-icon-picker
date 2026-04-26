@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "colored-icon-picker",
+  "homepage": "https://andistech.github.io/colored-icon-picker/",
+  "items": [
+    {
+      "name": "colored-icon-picker",
+      "type": "registry:component",
+      "title": "Colored Icon Picker",
+      "description": "A combined icon and color picker in a single popover. Includes 1,600+ categorized Lucide icons with search, hex color input, and WCAG contrast support.",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/colored-icon-picker/ColoredIconPicker.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/colored-icon-picker/color.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/colored-icon-picker/icons.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/lib/cn.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "src/components/colored-icon-picker/color-wheel.svg",
+          "type": "registry:file",
+          "target": "components/colored-icon-picker/color-wheel.svg"
+        }
+      ]
+    }
+  ]
+}

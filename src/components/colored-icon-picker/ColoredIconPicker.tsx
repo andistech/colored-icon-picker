@@ -1,7 +1,7 @@
 import { Check, Copy, Search, X } from 'lucide-react';
 import { type CSSProperties, useEffect, useId, useMemo, useRef, useState } from 'react';
 
-import colorWheelUrl from '../../../color-wheel.svg';
+import colorWheelUrl from './color-wheel.svg';
 import {
   getReadableIconColor,
   isValidHexColor,
