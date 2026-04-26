@@ -34,12 +34,12 @@ export function ColoredIconPickerDemo({
   const visibleBackgroundColor = colorTarget === 'background' ? color : iconModeBackgroundColor;
 
   return (
-    <section className="demo-grid">
-      <div className="workbench">
-        <div className="toolbar">
+    <section className="grid grid-cols-[1fr_296px] gap-4 items-start max-sm:grid-cols-1">
+      <div className="bg-card border border-border rounded-lg">
+        <div className="flex items-center justify-between gap-4 px-5 py-[14px] border-b border-border">
           <div>
-            <p className="toolbar__kicker">Component</p>
-            <h2>Colored icon picker</h2>
+            <p className="m-0 mb-[2px] text-muted-foreground text-[0.7rem] font-semibold tracking-[0.08em] uppercase">Component</p>
+            <h2 className="m-0 text-[0.9rem] font-semibold text-foreground">Colored icon picker</h2>
           </div>
           <ColoredIconPicker
             iconKey={iconKey}
@@ -52,70 +52,70 @@ export function ColoredIconPickerDemo({
           />
         </div>
 
-        <div className="preview-area">
-          <div className="entity-row">
-            <div className="entity-icon" style={{ color: foregroundColor, backgroundColor: visibleBackgroundColor }}>
+        <div className="grid gap-3 p-5">
+          <div className="grid grid-cols-[auto_1fr] gap-[14px] items-center p-4 bg-muted border border-border rounded-md">
+            <div className="inline-grid place-items-center w-12 h-12 border border-border rounded-md" style={{ color: foregroundColor, backgroundColor: visibleBackgroundColor }}>
               <Icon aria-hidden="true" size={28} strokeWidth={2.25} />
             </div>
             <div>
-              <h3>Project label</h3>
-              <p>{icon.label} · {color.toUpperCase()} · {colorTarget}</p>
+              <h3 className="m-0 text-[0.9375rem] font-semibold text-foreground">Project label</h3>
+              <p className="mt-[2px] mb-0 text-muted-foreground text-[0.8125rem]">{icon.label} · {color.toUpperCase()} · {colorTarget}</p>
             </div>
           </div>
 
-          <div className="sample-list">
+          <div className="grid gap-[6px]">
             {['Roadmap', 'Customer health', 'Release plan'].map((label, index) => (
-              <div className="sample-list__item" key={label}>
+              <div className="grid grid-cols-[auto_1fr_auto] gap-[10px] items-center min-h-[46px] px-3 py-2 text-sm text-foreground bg-background border border-border rounded-md" key={label}>
                 <div
-                  className="entity-icon entity-icon--small"
+                  className="inline-grid place-items-center w-12 h-12 border border-border rounded-md w-8 h-8"
                   style={{ color: foregroundColor, backgroundColor: visibleBackgroundColor }}
                 >
                   <Icon aria-hidden="true" size={18} strokeWidth={2.25} />
                 </div>
                 <span>{label}</span>
-                <span className="sample-list__meta">#{index + 1}</span>
+                <span className="text-muted-foreground text-[0.8125rem]">#{index + 1}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <aside className="settings-panel">
-        <div className="settings-panel__group">
-          <p className="settings-panel__label">Color applied to</p>
+      <aside className="bg-card border border-border rounded-lg">
+        <div className="px-5 py-4 border-b border-border last:border-b-0">
+          <p className="m-0 mb-[10px] text-muted-foreground text-[0.7rem] font-semibold tracking-[0.08em] uppercase">Color applied to</p>
           <ColorTargetControl value={colorTarget} onChange={onColorTargetChange} />
         </div>
-        <div className="settings-panel__group">
-          <p className="settings-panel__label">Popover placement</p>
+        <div className="px-5 py-4 border-b border-border last:border-b-0">
+          <p className="m-0 mb-[10px] text-muted-foreground text-[0.7rem] font-semibold tracking-[0.08em] uppercase">Popover placement</p>
           <PlacementControl value={placement} onChange={onPlacementChange} />
         </div>
-        <div className="settings-panel__group">
-          <p className="settings-panel__label">State</p>
-          <dl className="state-list">
-            <div>
-              <dt>Icon</dt>
-              <dd>{icon.label}</dd>
+        <div className="px-5 py-4 border-b border-border last:border-b-0">
+          <p className="m-0 mb-[10px] text-muted-foreground text-[0.7rem] font-semibold tracking-[0.08em] uppercase">State</p>
+          <dl className="grid m-0 border border-border rounded-md overflow-hidden">
+            <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+              <dt className="text-muted-foreground">Icon</dt>
+              <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{icon.label}</dd>
             </div>
-            <div>
-              <dt>Color</dt>
-              <dd>{color.toUpperCase()}</dd>
+            <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+              <dt className="text-muted-foreground">Color</dt>
+              <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{color.toUpperCase()}</dd>
             </div>
-            <div>
-              <dt>Applied to</dt>
-              <dd>{colorTarget}</dd>
+            <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+              <dt className="text-muted-foreground">Applied to</dt>
+              <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{colorTarget}</dd>
             </div>
-            <div>
-              <dt>Placement</dt>
-              <dd>{placement}</dd>
+            <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+              <dt className="text-muted-foreground">Placement</dt>
+              <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{placement}</dd>
             </div>
-            <div>
-              <dt>Theme</dt>
-              <dd>{themeMode}</dd>
+            <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+              <dt className="text-muted-foreground">Theme</dt>
+              <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{themeMode}</dd>
             </div>
             {colorTarget === 'background' ? (
-              <div>
-                <dt>Icon contrast</dt>
-                <dd>{foregroundColor}</dd>
+              <div className="flex justify-between items-baseline gap-3 px-[10px] py-[7px] border-t border-border first:border-t-0 text-[0.8125rem]">
+                <dt className="text-muted-foreground">Icon contrast</dt>
+                <dd className="m-0 text-foreground font-medium font-mono text-[0.75rem]">{foregroundColor}</dd>
               </div>
             ) : null}
           </dl>

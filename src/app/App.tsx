@@ -35,41 +35,41 @@ export default function App() {
   const nextThemeMode = themeMode === 'day' ? 'night' : 'day';
 
   return (
-    <main className="app-shell" data-theme={themeMode}>
-      <header className="app-header">
-        <nav className="app-header__breadcrumb" aria-label="Breadcrumb">
+    <main className="w-[min(1120px,calc(100%-48px))] mx-auto py-14 pb-24 text-foreground max-sm:w-[calc(100%-32px)] max-sm:py-8 max-sm:pb-16" data-theme={themeMode}>
+      <header className="mb-12 pb-10 border-b border-border">
+        <nav className="flex items-center gap-2 mb-5 text-muted-foreground text-[0.8125rem]" aria-label="Breadcrumb">
           <span>Components</span>
-          <span className="app-header__breadcrumb-sep" aria-hidden="true">/</span>
+          <span className="text-border select-none" aria-hidden="true">/</span>
           <span>colored-icon-picker</span>
         </nav>
-        <h1 className="app-header__title">Colored Icon Picker</h1>
-        <p className="app-header__description">
+        <h1 className="m-0 mb-3 text-[clamp(1.875rem,5vw,2.625rem)] font-bold tracking-[-0.03em] leading-[1.1] text-foreground">Colored Icon Picker</h1>
+        <p className="max-w-[600px] m-0 mb-5 text-muted-foreground text-base leading-[1.65]">
           A combined icon and color picker in a single popover. Ships 1,600+ categorized Lucide icons
           with category browsing, search, hex color input, and dark mode.
         </p>
-        <div className="app-header__tags">
-          <span className="app-tag">Component</span>
-          <span className="app-tag">lucide-react</span>
-          <span className="app-tag">React 19</span>
-          <span className="app-tag">shadcn</span>
+        <div className="flex flex-wrap gap-[6px]">
+          <span className="inline-flex items-center h-[22px] px-2 bg-secondary text-secondary-foreground text-[0.72rem] font-semibold tracking-[0.02em] border border-border rounded-full">Component</span>
+          <span className="inline-flex items-center h-[22px] px-2 bg-secondary text-secondary-foreground text-[0.72rem] font-semibold tracking-[0.02em] border border-border rounded-full">lucide-react</span>
+          <span className="inline-flex items-center h-[22px] px-2 bg-secondary text-secondary-foreground text-[0.72rem] font-semibold tracking-[0.02em] border border-border rounded-full">React 19</span>
+          <span className="inline-flex items-center h-[22px] px-2 bg-secondary text-secondary-foreground text-[0.72rem] font-semibold tracking-[0.02em] border border-border rounded-full">shadcn</span>
         </div>
       </header>
 
-      <div className="docs-card">
-        <div className="docs-card__bar">
-          <div className="docs-tabs" role="tablist">
-            <button type="button" role="tab" aria-selected={true} className="docs-tabs__btn">
+      <div className="border border-border rounded-lg">
+        <div className="flex items-center justify-between gap-4 px-3 py-1 bg-card border-b border-border rounded-t-lg">
+          <div className="flex gap-[2px]" role="tablist">
+            <button type="button" role="tab" aria-selected={true} className="h-8 px-3 text-[0.8125rem] font-medium text-muted-foreground bg-transparent border-0 rounded-md transition-colors duration-[120ms] aria-selected:text-foreground disabled:opacity-40 disabled:cursor-not-allowed">
               Preview
             </button>
-            <button type="button" role="tab" aria-selected={false} className="docs-tabs__btn" disabled>
+            <button type="button" role="tab" aria-selected={false} className="h-8 px-3 text-[0.8125rem] font-medium text-muted-foreground bg-transparent border-0 rounded-md transition-colors duration-[120ms] aria-selected:text-foreground disabled:opacity-40 disabled:cursor-not-allowed" disabled>
               Code
             </button>
           </div>
-          <div className="docs-card__controls">
+          <div className="flex items-center gap-2">
             <ColorTargetControl value={colorTarget} onChange={setColorTarget} />
             <button
               type="button"
-              className="docs-icon-btn"
+              className="inline-grid place-items-center w-8 h-8 text-foreground bg-background border border-border rounded-md transition-colors duration-[120ms] hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label={`Switch to ${nextThemeMode} mode`}
               onClick={() => setThemeMode(nextThemeMode)}
             >
@@ -79,7 +79,7 @@ export default function App() {
             </button>
           </div>
         </div>
-        <div className="docs-stage">
+        <div className="flex items-center justify-center min-h-60 px-10 py-12 bg-background bg-[radial-gradient(circle,var(--border)_1px,transparent_1px)] [background-size:16px_16px] rounded-b-lg">
           <ColoredIconPicker
             iconKey={iconKey}
             color={color}
@@ -92,18 +92,18 @@ export default function App() {
         </div>
       </div>
 
-      <section className="docs-section">
-        <h2 className="docs-section__heading">Installation</h2>
-        <div className="docs-code docs-code--shell">
-          <span className="docs-code__prompt">$</span>
+      <section className="mt-12 pt-10 border-t border-border">
+        <h2 className="m-0 mb-5 text-[1.375rem] font-semibold tracking-[-0.02em] text-foreground">Installation</h2>
+        <div className="px-6 py-5 bg-[#09090b] text-[#e4e4e7] rounded-lg font-mono text-[0.8125rem] leading-[1.7] overflow-x-auto flex items-center gap-[10px] py-[14px]">
+          <span className="text-[#52525b] select-none">$</span>
           <span>npx shadcn@latest add colored-icon-picker</span>
         </div>
       </section>
 
-      <section className="docs-section">
-        <h2 className="docs-section__heading">Usage</h2>
-        <div className="docs-code">
-          <pre>{`import { ColoredIconPicker } from "@/components/ui/colored-icon-picker"
+      <section className="mt-12 pt-10 border-t border-border">
+        <h2 className="m-0 mb-5 text-[1.375rem] font-semibold tracking-[-0.02em] text-foreground">Usage</h2>
+        <div className="px-6 py-5 bg-[#09090b] text-[#e4e4e7] rounded-lg font-mono text-[0.8125rem] leading-[1.7] overflow-x-auto">
+          <pre className="m-0">{`import { ColoredIconPicker } from "@/components/ui/colored-icon-picker"
 
 export function MyComponent() {
   const [iconKey, setIconKey] = useState("sparkles")
@@ -123,60 +123,60 @@ export function MyComponent() {
         </div>
       </section>
 
-      <section className="docs-section">
-        <h2 className="docs-section__heading">Examples</h2>
+      <section className="mt-12 pt-10 border-t border-border">
+        <h2 className="m-0 mb-5 text-[1.375rem] font-semibold tracking-[-0.02em] text-foreground">Examples</h2>
 
-        <div className="docs-section__subsection">
-          <h3 className="docs-section__subheading">Background color</h3>
-          <p className="docs-section__body">
+        <div className="mt-8 first:mt-0">
+          <h3 className="m-0 mb-2 text-base font-semibold text-foreground">Background color</h3>
+          <p className="m-0 mb-4 text-muted-foreground text-[0.9375rem] leading-[1.65]">
             Color is applied to the icon container background. The icon stroke automatically
             adapts for WCAG-compliant contrast.
           </p>
-          <div className="docs-example-grid">
+          <div className="flex flex-wrap gap-4">
             {bgExamples.map(({ iconKey: key, color: c, label }) => {
               const { Icon } = getIconOption(key);
               const fg = getReadableIconColor(c);
               return (
-                <div key={key} className="docs-example-item">
+                <div key={key} className="flex flex-col items-center gap-2">
                   <div
-                    className="entity-icon"
+                    className="inline-grid place-items-center w-12 h-12 border border-border rounded-md"
                     style={{ color: fg, backgroundColor: c, borderColor: c } as CSSProperties}
                   >
                     <Icon aria-hidden="true" size={28} strokeWidth={2.25} />
                   </div>
-                  <span className="docs-example-item__label">{label}</span>
+                  <span className="text-[0.75rem] text-muted-foreground">{label}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="docs-section__subsection">
-          <h3 className="docs-section__subheading">Icon color</h3>
-          <p className="docs-section__body">
+        <div className="mt-8 first:mt-0">
+          <h3 className="m-0 mb-2 text-base font-semibold text-foreground">Icon color</h3>
+          <p className="m-0 mb-4 text-muted-foreground text-[0.9375rem] leading-[1.65]">
             Color is applied directly to the icon stroke against a neutral container background.
           </p>
-          <div className="docs-example-grid">
+          <div className="flex flex-wrap gap-4">
             {iconColorExamples.map(({ iconKey: key, color: c, label }) => {
               const { Icon } = getIconOption(key);
               return (
-                <div key={key} className="docs-example-item">
+                <div key={key} className="flex flex-col items-center gap-2">
                   <div
-                    className="entity-icon"
+                    className="inline-grid place-items-center w-12 h-12 border border-border rounded-md"
                     style={{ color: c, backgroundColor: 'var(--background)', borderColor: 'var(--border)' } as CSSProperties}
                   >
                     <Icon aria-hidden="true" size={28} strokeWidth={2.25} />
                   </div>
-                  <span className="docs-example-item__label">{label}</span>
+                  <span className="text-[0.75rem] text-muted-foreground">{label}</span>
                 </div>
               );
             })}
           </div>
         </div>
 
-        <div className="docs-section__subsection">
-          <h3 className="docs-section__subheading">Interactive demo</h3>
-          <p className="docs-section__body">
+        <div className="mt-8 first:mt-0">
+          <h3 className="m-0 mb-2 text-base font-semibold text-foreground">Interactive demo</h3>
+          <p className="m-0 mb-4 text-muted-foreground text-[0.9375rem] leading-[1.65]">
             Full workbench to explore icon and color combinations with live state inspection.
           </p>
           <ColoredIconPickerDemo

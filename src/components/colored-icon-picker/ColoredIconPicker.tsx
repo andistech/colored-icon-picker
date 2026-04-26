@@ -245,10 +245,10 @@ export function ColoredIconPicker({
   } as CSSProperties;
 
   return (
-    <div className="icon-picker" ref={wrapperRef}>
+    <div className="relative flex-none" ref={wrapperRef}>
       <button
         type="button"
-        className="icon-picker__trigger"
+        className="inline-grid place-items-center w-12 h-12 border border-border rounded-md text-[var(--picker-trigger-fg,currentColor)] bg-[var(--picker-trigger-bg,--color-background)] border-[var(--picker-trigger-border,--color-border)] transition-[box-shadow,opacity] duration-[150ms] hover:opacity-[0.88] hover:ring-2 hover:ring-border/50 hover:ring-offset-2 hover:ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         style={triggerStyle}
         aria-expanded={isOpen}
         aria-controls={popoverId}
@@ -259,23 +259,23 @@ export function ColoredIconPicker({
 
       {isOpen ? (
         <div
-          className="icon-picker__popover"
+          className="absolute z-50 w-[min(380px,calc(100vw-32px))] p-3 bg-popover text-popover-foreground border border-border rounded-lg shadow-[0_4px_6px_-1px_rgba(0,0,0,0.07),0_2px_4px_-2px_rgba(0,0,0,0.05),0_0_0_1px_rgba(0,0,0,0.03)]"
           id={popoverId}
           role="dialog"
           aria-label="Icon and color picker"
           style={getPopoverStyle(placement, wrapperRef.current)}
         >
-          <div className="icon-picker__popover-header">
-            <div className="icon-picker__preview" style={triggerStyle}>
+          <div className="grid grid-cols-[auto_1fr_auto] gap-[10px] items-center mb-3 pb-3 border-b border-border">
+            <div className="inline-grid place-items-center w-10 h-10 border border-[var(--picker-trigger-border,--color-border)] rounded-md" style={triggerStyle}>
               <SelectedIcon aria-hidden="true" size={24} strokeWidth={2.25} />
             </div>
             <div>
-              <p className="icon-picker__eyebrow">Selected</p>
-              <p className="icon-picker__selection">{selectedIcon.label}</p>
+              <p className="m-0 mb-[1px] text-muted-foreground text-[0.6875rem] font-semibold tracking-[0.07em] uppercase">Selected</p>
+              <p className="m-0 text-[0.9375rem] font-semibold text-popover-foreground">{selectedIcon.label}</p>
             </div>
             <button
               type="button"
-              className="icon-button"
+              className="inline-grid place-items-center w-7 h-7 text-muted-foreground bg-transparent border-0 rounded-md transition-[background-color,color] duration-[120ms] hover:text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Close picker"
               onClick={() => setIsOpen(false)}
             >
@@ -283,33 +283,34 @@ export function ColoredIconPicker({
             </button>
           </div>
 
-          <section className="control-group" aria-labelledby="color-heading">
-            <div className="control-group__header">
-              <h2 id="color-heading">Color</h2>
+          <section className="grid gap-2 pt-3 border-t border-border" aria-labelledby="color-heading">
+            <div>
+              <h2 id="color-heading" className="m-0 text-foreground text-[0.8125rem] font-semibold">Color</h2>
             </div>
-            <div className="color-row">
-              <div className="color-panel-anchor">
+            <div className="grid grid-cols-[36px_1fr] gap-[6px]">
+              <div className="relative">
                 <button
                   type="button"
-                  className="color-wheel-button"
+                  className="inline-grid place-items-center w-9 h-9 overflow-hidden bg-muted border border-input rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   aria-label="Open color picker"
                   onClick={() => systemColorInputRef.current?.click()}
                 >
-                  <img src={colorWheelUrl} alt="" aria-hidden="true" />
+                  <img className="block w-6 h-6" src={colorWheelUrl} alt="" aria-hidden="true" />
                 </button>
                 <input
                   ref={systemColorInputRef}
-                  className="native-color-input"
+                  className="absolute inset-0 w-9 h-9 opacity-0 pointer-events-none"
                   type="color"
                   tabIndex={-1}
                   value={color}
                   onChange={(event) => onColorChange(event.target.value)}
                 />
               </div>
-              <div className="hex-input">
-                <label className="hex-input__label">
+              <div className="flex gap-1 items-center">
+                <label className="flex-1 min-w-0 block">
                   <span className="sr-only">Hex color</span>
                   <input
+                    className="w-full min-w-0 h-9 text-foreground bg-background border border-input rounded-md focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring px-[10px] font-mono text-[0.8125rem] uppercase aria-[invalid=true]:border-red-500 aria-[invalid=true]:ring-1 aria-[invalid=true]:ring-red-500"
                     value={displayedHex}
                     spellCheck={false}
                     aria-invalid={!isValidHexColor(displayedHex)}
@@ -318,7 +319,7 @@ export function ColoredIconPicker({
                 </label>
                 <button
                   type="button"
-                  className="hex-copy"
+                  className="inline-grid place-items-center w-7 h-7 text-muted-foreground bg-transparent border-0 rounded-md transition-[background-color,color] duration-[120ms] hover:text-foreground hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   aria-label="Copy hex color"
                   onClick={onCopyHex}
                 >
@@ -326,12 +327,12 @@ export function ColoredIconPicker({
                 </button>
               </div>
             </div>
-            <div className="swatch-grid" aria-label="Color swatches">
+            <div className="grid grid-cols-10 gap-[5px]" aria-label="Color swatches">
               {colorSwatches.map((swatch) => (
                 <button
                   type="button"
                   key={swatch}
-                  className="swatch"
+                  className="inline-grid place-items-center aspect-square min-w-0 text-white bg-[var(--swatch-color)] border-0 rounded-sm transition-transform duration-[100ms] hover:scale-110 aria-pressed:shadow-[0_0_0_2px_var(--popover),0_0_0_4px_var(--swatch-color)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   style={{ '--swatch-color': swatch } as CSSProperties}
                   aria-label={`Use ${swatch}`}
                   aria-pressed={swatch === color}
@@ -343,23 +344,28 @@ export function ColoredIconPicker({
             </div>
           </section>
 
-          <section className="control-group" aria-labelledby="icon-heading">
-            <div className="control-group__header">
-              <h2 id="icon-heading">Icon</h2>
+          <section className="grid gap-2 pt-3 border-t border-border" aria-labelledby="icon-heading">
+            <div>
+              <h2 id="icon-heading" className="m-0 text-foreground text-[0.8125rem] font-semibold">Icon</h2>
             </div>
-            <label className="search-field">
-              <Search aria-hidden="true" size={17} />
+            <label className="relative block">
+              <Search aria-hidden="true" size={17} className="absolute top-1/2 left-[10px] text-muted-foreground -translate-y-1/2 pointer-events-none" />
               <span className="sr-only">Search icons</span>
-              <input value={query} placeholder="Search" onChange={(event) => setQuery(event.target.value)} />
+              <input
+                className="w-full min-w-0 h-9 text-foreground bg-background border border-input rounded-md focus:outline-none focus:border-ring focus:ring-1 focus:ring-ring pl-[34px] pr-[10px] text-sm"
+                value={query}
+                placeholder="Search"
+                onChange={(event) => setQuery(event.target.value)}
+              />
             </label>
-            <div className="icon-category-nav" ref={categoryNavRef} role="tablist" aria-label="Icon categories">
+            <div className="relative flex gap-1 overflow-x-auto overscroll-x-contain [scrollbar-width:none] pb-[2px] [&::-webkit-scrollbar]:hidden" ref={categoryNavRef} role="tablist" aria-label="Icon categories">
               {filteredCategories.map((cat) => (
                 <button
                   type="button"
                   key={cat.key}
                   role="tab"
                   data-cat={cat.key}
-                  className="icon-category-nav__btn"
+                  className="flex-none px-[10px] py-[3px] text-muted-foreground text-[0.72rem] font-medium whitespace-nowrap bg-transparent border border-border rounded-full transition-[background-color,color,border-color] duration-[120ms] hover:text-foreground hover:bg-muted aria-selected:text-primary-foreground aria-selected:bg-primary aria-selected:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   aria-selected={cat.key === activeCategory}
                   onClick={() => scrollToCategory(cat.key)}
                 >
@@ -367,11 +373,11 @@ export function ColoredIconPicker({
                 </button>
               ))}
             </div>
-            <div className="icon-scroll-pane" ref={scrollPaneRef} onScroll={onIconPaneScroll}>
+            <div className="relative max-h-60 overflow-y-auto overscroll-contain [scrollbar-width:thin] [scrollbar-color:var(--border)_transparent]" ref={scrollPaneRef} onScroll={onIconPaneScroll}>
               {filteredCategories.map((cat) => (
-                <div key={cat.key} className="icon-category" ref={setCatRef(cat.key)}>
-                  <p className="icon-category__label">{cat.label}</p>
-                  <div className="icon-grid">
+                <div key={cat.key} className="mb-[10px] last:mb-0" ref={setCatRef(cat.key)}>
+                  <p className="sticky top-0 z-[1] m-0 mb-1 pt-[2px] pb-1 text-muted-foreground text-[0.6875rem] font-semibold tracking-[0.06em] uppercase bg-popover">{cat.label}</p>
+                  <div className="grid grid-cols-8 gap-[3px]">
                     {cat.icons.map((option) => {
                       const OptionIcon = option.Icon;
                       const isSelected = option.key === iconKey;
@@ -380,7 +386,7 @@ export function ColoredIconPicker({
                         <button
                           type="button"
                           key={option.key}
-                          className="icon-option"
+                          className="inline-grid place-items-center aspect-square min-w-0 text-muted-foreground bg-transparent border-0 rounded-md transition-[background-color,color] duration-[100ms] hover:text-foreground hover:bg-accent aria-pressed:text-primary-foreground aria-pressed:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                           aria-label={option.label}
                           aria-pressed={isSelected}
                           title={option.label}
@@ -394,7 +400,7 @@ export function ColoredIconPicker({
                 </div>
               ))}
               {filteredCategories.length === 0 && (
-                <p className="icon-no-results">No icons found</p>
+                <p className="m-0 py-5 text-muted-foreground text-sm text-center">No icons found</p>
               )}
             </div>
           </section>
@@ -431,14 +437,19 @@ type PlacementControlProps = {
 
 export function PlacementControl({ value, onChange }: PlacementControlProps) {
   return (
-    <div className="placement-control">
-      <div className="placement-grid" role="radiogroup" aria-label="Popover placement">
+    <div className="flex flex-col gap-[6px]">
+      <div
+        className="grid gap-[3px]"
+        style={{ gridTemplateColumns: 'repeat(5, 16px)', gridTemplateRows: 'repeat(5, 16px)' }}
+        role="radiogroup"
+        aria-label="Popover placement"
+      >
         {PLACEMENT_CELLS.map(({ placement, col, row, label }) => (
           <button
             key={placement}
             type="button"
             role="radio"
-            className="placement-dot"
+            className="w-4 h-4 p-0 bg-border border-0 rounded-[3px] cursor-pointer transition-colors duration-[80ms] hover:bg-muted-foreground aria-checked:bg-primary aria-checked:hover:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             style={{ gridColumn: col, gridRow: row }}
             aria-label={label}
             aria-checked={value === placement}
@@ -447,14 +458,14 @@ export function PlacementControl({ value, onChange }: PlacementControlProps) {
           />
         ))}
         <div
-          className="placement-grid__center"
+          className="bg-muted border border-border rounded-[3px] w-full h-full"
           style={{ gridColumn: '2 / 5', gridRow: '2 / 5' }}
           aria-hidden="true"
         />
       </div>
       <button
         type="button"
-        className="placement-auto-btn"
+        className="self-start px-[10px] py-[2px] text-[0.72rem] font-medium text-muted-foreground bg-transparent border border-border rounded-full transition-[background-color,color,border-color] duration-[120ms] hover:text-foreground hover:bg-muted aria-pressed:text-primary-foreground aria-pressed:bg-primary aria-pressed:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         aria-pressed={value === 'auto'}
         onClick={() => onChange('auto')}
       >
@@ -471,12 +482,12 @@ type ColorTargetControlProps = {
 
 export function ColorTargetControl({ value, onChange }: ColorTargetControlProps) {
   return (
-    <div className="segmented-control" role="radiogroup" aria-label="Color application">
+    <div className="grid grid-flow-col gap-[2px] p-[2px] bg-muted border border-border rounded-md" role="radiogroup" aria-label="Color application">
       <button
         type="button"
         role="radio"
         aria-checked={value === 'icon'}
-        className="segmented-control__item"
+        className="min-h-8 px-3 text-muted-foreground text-sm font-medium bg-transparent border-0 rounded-sm transition-[background-color,color] duration-[120ms] aria-checked:text-foreground aria-checked:bg-background aria-checked:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         onClick={() => onChange('icon')}
       >
         Icon
@@ -485,7 +496,7 @@ export function ColorTargetControl({ value, onChange }: ColorTargetControlProps)
         type="button"
         role="radio"
         aria-checked={value === 'background'}
-        className="segmented-control__item"
+        className="min-h-8 px-3 text-muted-foreground text-sm font-medium bg-transparent border-0 rounded-sm transition-[background-color,color] duration-[120ms] aria-checked:text-foreground aria-checked:bg-background aria-checked:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         onClick={() => onChange('background')}
       >
         Background
